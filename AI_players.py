@@ -100,7 +100,6 @@ def AI_player(player, game, memory_AI_p1=None):
     Information:
     player.rect.x : coordonnée en abscisse
     player.rect.y : coordonnée en ordonnée
-    player.rect.y : coordonnée en ordonnée
 
     Taille de l'image du joueur : 70
 
@@ -116,8 +115,12 @@ def AI_player(player, game, memory_AI_p1=None):
     player.move_downleft()
 
     return_info_per_players(player, game) : [[enemies_coordinates], my_coordinates]
+            my_coordinates est sous la forme : [x, y, size_x, size_y, center]
+            center est sous la forme : (x, y)
+
 
     closest(enemies_coordinates, my_coordinates) : abscisse et ordonnée de l'ennemi le plus proche
+    retourne 0 si plus aucun ennemi
 
     move_toward(player, x, y, target_x, target_y, velocity) : dirige le robot dans la direction de la cible
 
@@ -132,26 +135,12 @@ def AI_player(player, game, memory_AI_p1=None):
     enemies_coordinates = infos[0]
     my_coordinates = infos[1]
 
-
-    enemy_to_target = closest(enemies_coordinates, my_coordinates)
-    if enemy_to_target == 0: # no more enemy
-        return True
-    enemy_x = enemy_to_target[4][0]
-    enemy_y = enemy_to_target[4][1]
     x = my_coordinates[-1][0]
     y = my_coordinates[-1][1]
 
-
-    enemy_to_target = closest(enemies_coordinates, my_coordinates)
-    enemy_x = enemy_to_target[4][0]
-    enemy_y = enemy_to_target[4][1]
-    x = my_coordinates[-1][0]
-    y = my_coordinates[-1][1]
-
-    player.memory.append(x)
 
     ## ACTUAL AI ##
-    move_toward(player, x, y, enemy_x, enemy_y)
+    move_toward(player, x, y, 500, 500)
 
     # return False => not to shoot
     return True # => ask to shoot
